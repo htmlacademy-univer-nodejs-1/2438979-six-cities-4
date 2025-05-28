@@ -14,7 +14,11 @@
     "lint": "eslint src/ --ext .ts",
     "compile": "tsc -p tsconfig.json",
     "clean": "rimraf dist",
-    "ts": "ts-node"
+    "ts": "ts-node",
+    "cli": "node --loader ts-node/esm ./src/main.cli.ts",
+    "cli:version": "npm run cli -- --version",
+    "cli:import": "npm run cli -- --import ./src/mocks/offers.tsv",
+    "cli:help": "npm run cli -- --help"
   },
   "devDependencies": {
     "@types/node": "18.17.17",
@@ -28,7 +32,10 @@
   },
   "type": "module",
   "engines": {
-    "node": "^18.0.0",
-    "npm": ">=8"
+    "node": "^22.0.0",
+    "npm": ">=10"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1"
   }
 }
