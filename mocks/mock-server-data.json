@@ -1,0 +1,258 @@
+{
+  "users": [
+    {
+      "userId": "1",
+      "name": "Alice Dupont",
+      "email": "alice@example.com",
+      "password": "password123",
+      "type": "ordinary"
+    },
+    {
+      "userId": "2",
+      "name": "Bob Müller",
+      "email": "bob@example.com",
+      "password": "password123",
+      "type": "pro"
+    },
+    {
+      "userId": "3",
+      "name": "Chloe Janssens",
+      "email": "chloe@example.com",
+      "password": "password123",
+      "type": "ordinary"
+    },
+    {
+      "userId": "4",
+      "name": "David Meier",
+      "email": "david@example.com",
+      "password": "password123",
+      "type": "pro"
+    },
+    {
+      "userId": "5",
+      "name": "Eva Schmidt",
+      "email": "eva@example.com",
+      "password": "password123",
+      "type": "ordinary"
+    },
+    {
+      "userId": "6",
+      "name": "Felix Becker",
+      "email": "felix@example.com",
+      "password": "password123",
+      "type": "pro"
+    },
+    {
+      "userId": "7",
+      "name": "Greta Dubois",
+      "email": "greta@example.com",
+      "password": "password123",
+      "type": "ordinary"
+    }
+  ],
+  "offers": [
+    {
+      "title": "Charming Studio in Paris",
+      "description": "Enjoy a romantic getaway in this charming studio located in the heart of Paris.",
+      "publicationDate": "2024-05-01T10:00:00.000Z",
+      "city": "Paris",
+      "preview": "https://example.com/photo1.jpg",
+      "photos": [
+        "https://example.com/photo1.jpg",
+        "https://example.com/photo2.jpg",
+        "https://example.com/photo3.jpg",
+        "https://example.com/photo4.jpg",
+        "https://example.com/photo5.jpg",
+        "https://example.com/photo6.jpg"
+      ],
+      "isPremium": true,
+      "isFavorite": false,
+      "rating": 4.5,
+      "type": "apartment",
+      "numberOfRooms": 1,
+      "numberOfGuests": 2,
+      "rentalCost": 120,
+      "facilities": ["Breakfast", "Air conditioning"],
+      "userId": "1",
+      "numberOfComments": 5,
+      "coordinates": {
+        "latitude": 48.85661,
+        "longitude": 2.351499
+      }
+    },
+    {
+      "title": "Modern Loft in Cologne",
+      "description": "Spacious modern loft with all the amenities needed for your business trip.",
+      "publicationDate": "2024-05-02T11:00:00.000Z",
+      "city": "Cologne",
+      "preview": "https://example.com/loft1.jpg",
+      "photos": [
+        "https://example.com/loft1.jpg",
+        "https://example.com/loft2.jpg",
+        "https://example.com/loft3.jpg",
+        "https://example.com/loft4.jpg",
+        "https://example.com/loft5.jpg",
+        "https://example.com/loft6.jpg"
+      ],
+      "isPremium": false,
+      "isFavorite": true,
+      "rating": 4.2,
+      "type": "apartment",
+      "numberOfRooms": 3,
+      "numberOfGuests": 4,
+      "rentalCost": 150,
+      "facilities": ["Laptop friendly workspace", "Fridge"],
+      "userId": "2",
+      "numberOfComments": 8,
+      "coordinates": {
+        "latitude": 50.938361,
+        "longitude": 6.959974
+      }
+    },
+    {
+      "title": "Elegant Apartment in Brussels",
+      "description": "Elegant and cozy apartment located just a short walk from the Grand Place.",
+      "publicationDate": "2024-05-03T12:00:00.000Z",
+      "city": "Brussels",
+      "preview": "https://example.com/brussels1.jpg",
+      "photos": [
+        "https://example.com/brussels1.jpg",
+        "https://example.com/brussels2.jpg",
+        "https://example.com/brussels3.jpg",
+        "https://example.com/brussels4.jpg",
+        "https://example.com/brussels5.jpg",
+        "https://example.com/brussels6.jpg"
+      ],
+      "isPremium": true,
+      "isFavorite": false,
+      "rating": 4.0,
+      "type": "apartment",
+      "numberOfRooms": 2,
+      "numberOfGuests": 2,
+      "rentalCost": 100,
+      "facilities": ["Washer", "Towels"],
+      "userId": "3",
+      "numberOfComments": 12,
+      "coordinates": {
+        "latitude": 50.846557,
+        "longitude": 4.351697
+      }
+    },
+    {
+      "title": "Canal View in Amsterdam",
+      "description": "Enjoy the scenic canal view from this centrally located studio apartment.",
+      "publicationDate": "2024-05-04T13:00:00.000Z",
+      "city": "Amsterdam",
+      "preview": "https://example.com/ams1.jpg",
+      "photos": [
+        "https://example.com/ams1.jpg",
+        "https://example.com/ams2.jpg",
+        "https://example.com/ams3.jpg",
+        "https://example.com/ams4.jpg",
+        "https://example.com/ams5.jpg",
+        "https://example.com/ams6.jpg"
+      ],
+      "isPremium": false,
+      "isFavorite": true,
+      "rating": 4.9,
+      "type": "room",
+      "numberOfRooms": 1,
+      "numberOfGuests": 2,
+      "rentalCost": 200,
+      "facilities": ["Fridge", "Air conditioning"],
+      "userId": "4",
+      "numberOfComments": 3,
+      "coordinates": {
+        "latitude": 52.370216,
+        "longitude": 4.895168
+      }
+    },
+    {
+      "title": "Family Flat in Hamburg",
+      "description": "Ideal for families, this flat offers two bedrooms and a spacious living room.",
+      "publicationDate": "2024-05-05T14:00:00.000Z",
+      "city": "Hamburg",
+      "preview": "https://example.com/hamburg1.jpg",
+      "photos": [
+        "https://example.com/hamburg1.jpg",
+        "https://example.com/hamburg2.jpg",
+        "https://example.com/hamburg3.jpg",
+        "https://example.com/hamburg4.jpg",
+        "https://example.com/hamburg5.jpg",
+        "https://example.com/hamburg6.jpg"
+      ],
+      "isPremium": true,
+      "isFavorite": false,
+      "rating": 4.3,
+      "type": "house",
+      "numberOfRooms": 2,
+      "numberOfGuests": 4,
+      "rentalCost": 130,
+      "facilities": ["Baby seat", "Towels"],
+      "userId": "5",
+      "numberOfComments": 6,
+      "coordinates": {
+        "latitude": 53.550341,
+        "longitude": 10.000654
+      }
+    },
+    {
+      "title": "Downtown Spot in Dusseldorf",
+      "description": "Explore Dusseldorf from this conveniently located downtown apartment.",
+      "publicationDate": "2024-05-06T15:00:00.000Z",
+      "city": "Dusseldorf",
+      "preview": "https://example.com/dusseldorf1.jpg",
+      "photos": [
+        "https://example.com/dusseldorf1.jpg",
+        "https://example.com/dusseldorf2.jpg",
+        "https://example.com/dusseldorf3.jpg",
+        "https://example.com/dusseldorf4.jpg",
+        "https://example.com/dusseldorf5.jpg",
+        "https://example.com/dusseldorf6.jpg"
+      ],
+      "isPremium": false,
+      "isFavorite": true,
+      "rating": 4.6,
+      "type": "hotel",
+      "numberOfRooms": 2,
+      "numberOfGuests": 2,
+      "rentalCost": 130,
+      "facilities": ["Laptop friendly workspace", "Washer"],
+      "userId": "6",
+      "numberOfComments": 4,
+      "coordinates": {
+        "latitude": 51.225402,
+        "longitude": 6.776314
+      }
+    },
+    {
+      "title": "Budget Stay in Brussels",
+      "description": "Affordable yet comfortable stay for solo travelers in the center of Brussels.",
+      "publicationDate": "2024-05-07T16:00:00.000Z",
+      "city": "Brussels",
+      "preview": "https://example.com/budget1.jpg",
+      "photos": [
+        "https://example.com/budget1.jpg",
+        "https://example.com/budget2.jpg",
+        "https://example.com/budget3.jpg",
+        "https://example.com/budget4.jpg",
+        "https://example.com/budget5.jpg",
+        "https://example.com/budget6.jpg"
+      ],
+      "isPremium": false,
+      "isFavorite": false,
+      "rating": 3.9,
+      "type": "room",
+      "numberOfRooms": 1,
+      "numberOfGuests": 1,
+      "rentalCost": 100,
+      "facilities": ["Fridge", "Towels"],
+      "userId": "7",
+      "numberOfComments": 2,
+      "coordinates": {
+        "latitude": 50.846557,
+        "longitude": 4.351697
+      }
+    }
+  ]
+}

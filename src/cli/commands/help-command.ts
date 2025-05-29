@@ -11,5 +11,6 @@ export class HelpCommand implements Command {
     console.log(`${chalk.cyan('--help')}                            ${chalk.magenta('Вывести список поддерживаемых команд')}`);
     console.log(`${chalk.cyan('--version')}                         ${chalk.magenta('Вывести версию приложения')}`);
     console.log(`${chalk.cyan('--import <path>')}                   ${chalk.magenta('Вывести данные из TSV-файла')}`);
+    console.log(`${chalk.cyan('--generate <n> <path> <url>')}       ${chalk.magenta('Сгенерировать произвольное количество предложений в .tsv файл. <url> - ссылка на json-сервер')}`);
   }
 }

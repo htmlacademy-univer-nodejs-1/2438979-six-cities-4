@@ -17,8 +17,10 @@
     "ts": "ts-node",
     "cli": "node --loader ts-node/esm ./src/main.cli.ts",
     "cli:version": "npm run cli -- --version",
-    "cli:import": "npm run cli -- --import ./src/mocks/offers.tsv",
-    "cli:help": "npm run cli -- --help"
+    "cli:import": "npm run cli -- --import ./mocks/offers.tsv",
+    "cli:generate": "npm run cli -- --generate 300 ./mocks/offers.tsv http://localhost:3000/",
+    "cli:help": "npm run cli -- --help",
+    "json-server": "json-server --watch ./mocks/mock-server-data.json"
   },
   "devDependencies": {
     "@types/node": "18.17.17",
@@ -26,6 +28,7 @@
     "@typescript-eslint/parser": "6.7.0",
     "eslint": "8.49.0",
     "eslint-config-htmlacademy": "9.1.1",
+    "json-server": "^1.0.0-beta.3",
     "rimraf": "5.0.1",
     "ts-node": "10.9.1",
     "typescript": "5.2.2"
@@ -36,6 +39,8 @@
     "npm": ">=10"
   },
   "dependencies": {
-    "chalk": "^5.4.1"
+    "chalk": "^5.4.1",
+    "got": "^14.4.7",
+    "tslib": "^2.8.1"
   }
 }
