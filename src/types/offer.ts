@@ -2,7 +2,7 @@ import type { User } from './user.js';
 
 export enum City {
   Paris = 'Paris',
-  Cologne = 'Colonge',
+  Cologne = 'Cologne',
   Brussels = 'Brussels',
   Amsterdam = 'Amsterdam',
   Hamburg = 'Hamburg',
