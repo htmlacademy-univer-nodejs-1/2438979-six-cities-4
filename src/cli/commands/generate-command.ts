@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import { createWriteStream } from 'node:fs';
 import { Command } from './command.js';
 import { Offer } from '../../types/offer.js';
-import { JsonServerClient } from '../../utils/json-server-client.ts/index.js';
+import { JsonServerClient } from '../../utils/json-server-client/index.js';
 import * as RandomUtils from './../../utils/random/index.js';
 import * as EntityConstants from './../../constants/entity-constants.js';
 
