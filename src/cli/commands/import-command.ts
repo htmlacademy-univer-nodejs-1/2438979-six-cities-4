@@ -1,11 +1,11 @@
 import chalk from 'chalk';
+import readline from 'node:readline';
+import fs from 'node:fs';
+import path from 'node:path';
 import { Command } from './command.js';
 import { City, HousingType, Facility } from '../../types/offer.js';
 import { UserType } from '../../types/user.js';
-import fs from 'node:fs';
-import path from 'node:path';
 import { createReadStream } from 'node:fs';
-import readline from 'node:readline';
 import { createCliContainer } from '../cli.container.js';
 import { UserService } from '../../modules/user/user-service.interface.js';
 import { OfferService } from '../../modules/offer/offer-service.interface.js';
