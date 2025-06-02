@@ -1,8 +1,8 @@
-import { UUID } from 'node:crypto';
+import { Types } from 'mongoose';
 
 export class CreateCommentDto {
   public text!: string;
   public rating!: number;
-  public authorId!: UUID;
-  public offerId!: UUID;
+  public authorId!: Types.ObjectId;
+  public offerId!: Types.ObjectId;
 }
