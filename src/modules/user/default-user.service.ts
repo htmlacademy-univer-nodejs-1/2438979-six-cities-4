@@ -5,6 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto.js';
 import { inject, injectable } from 'inversify';
 import { Component } from '../../types/index.js';
 import { Logger } from '../../rest/logger/logger.interface.js';
+import { Types } from 'mongoose';
 
 @injectable()
 export class DefaultUserService implements UserService {
@@ -24,7 +25,7 @@ export class DefaultUserService implements UserService {
     return result;
   }
 
-  public async findById(id: string): Promise<DocumentType<UserEntity> | null> {
+  public async findById(id: string | Types.ObjectId): Promise<DocumentType<UserEntity> | null> {
     return this.userModel.findById(id).exec();
   }
 

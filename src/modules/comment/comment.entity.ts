@@ -1,8 +1,8 @@
 import { defaultClasses, getModelForClass, modelOptions, prop } from '@typegoose/typegoose';
-import { UUID } from 'node:crypto';
+import { Types } from 'mongoose';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
-export interface CommentEntity extends defaultClasses.Base<UUID> {}
+export interface CommentEntity extends defaultClasses.Base<Types.ObjectId> {}
 
 @modelOptions({
   schemaOptions: {
@@ -20,10 +20,10 @@ export class CommentEntity extends defaultClasses.TimeStamps {
   public rating!: number;
 
   @prop({required: true})
-  public authorId!: UUID;
+  public authorId!: Types.ObjectId;
 
   @prop({required: true})
-  public offerId!: UUID;
+  public offerId!: Types.ObjectId;
 }
 
 export const CommentModel = getModelForClass(CommentEntity);
