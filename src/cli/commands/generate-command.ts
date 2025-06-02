@@ -2,36 +2,10 @@ import chalk from 'chalk';
 import { createWriteStream } from 'node:fs';
 import { Command } from './command.js';
 import { Offer } from '../../types/offer.js';
-import { JsonServerClient } from '../../utils/json-server-client/index.js';
-import * as RandomUtils from './../../utils/random/index.js';
-import * as EntityConstants from './../../constants/entity-constants.js';
-
-const convertOfferToTSV = (offer: Offer) => {
-  const fields = [
-    offer.title,
-    offer.description,
-    offer.publicationDate,
-    offer.city,
-    offer.preview,
-    offer.photos.join(','),
-    offer.isPremium,
-    offer.isFavorite,
-    offer.rating,
-    offer.type,
-    offer.numberOfRooms,
-    offer.numberOfGuests,
-    offer.rentalCost,
-    offer.facilities.join(','),
-    offer.author.name,
-    offer.author.email,
-    offer.author.avatar,
-    offer.author.password,
-    offer.author.type,
-    offer.coordinates.latitude,
-    offer.coordinates.longitude
-  ];
-  return fields.join('\t');
-};
+import { JsonServerClient } from '../../lib/json-server-client/index.js';
+import * as RandomUtils from '../../lib/utils/random/index.js';
+import * as EntityConstants from '../../lib/constants/offer-constants.js';
+import { getTsvFromOffer } from '../../lib/utils/tsv/index.js';
 
 export class GenerateCommand implements Command {
   public getName(): string {
@@ -86,7 +60,7 @@ export class GenerateCommand implements Command {
         }
       };
 
-      fileWriteStream.write(`${convertOfferToTSV(generatedOffer)}\n`);
+      fileWriteStream.write(`${getTsvFromOffer(generatedOffer)}\n`);
     });
 
     fileWriteStream.end();

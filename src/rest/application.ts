@@ -3,7 +3,7 @@ import { Config, RestSchema } from './config/index.js';
 import { Component } from '../types/component.js';
 import { inject, injectable } from 'inversify';
 import { DatabaseClient } from './database-client/index.js';
-import { getMongoURI } from '../utils/database/index.js';
+import { getMongoURI } from '../lib/utils/database/index.js';
 import express, { Express } from 'express';
 import { Controller, ExceptionFilter } from '../rest/index.js';
 
