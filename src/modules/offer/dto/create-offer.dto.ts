@@ -2,6 +2,7 @@ import { City, HousingType, Facility, Coordinates } from '../../../types/index.j
 import { CreateOfferValidationMessage } from './create-offer.messages.js';
 import { IsBoolean, IsEnum, IsNumber, IsString, MaxLength, MinLength, ValidateNested, ArrayMinSize, ArrayMaxSize, IsArray, IsDateString, IsInt, Max, Min, IsObject } from 'class-validator';
 import { Type } from 'class-transformer';
+import { CoordinatesValidator } from './coordinates.validator.js';
 
 export class CreateOfferDto {
   @IsString()
@@ -65,7 +66,7 @@ export class CreateOfferDto {
   public numberOfComments!: number;
 
   @ValidateNested()
-  @Type(() => Object)
+  @Type(() => CoordinatesValidator)
   @IsObject({ message: CreateOfferValidationMessage.coordinates.invalidFormat })
   public coordinates!: Coordinates;
 }

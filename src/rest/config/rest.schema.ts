@@ -4,15 +4,17 @@ import validator from 'convict-format-with-validator';
 convict.addFormats(validator);
 
 export type RestSchema = {
-  DB_HOST: string;
+  HOST: string;
   PORT: number;
   SALT: string;
+  JWT_SECRET: string;
+  DB_HOST: string;
   DB_USER: string;
   DB_PASSWORD: string;
   DB_NAME: string;
   DB_PORT: string;
   UPLOAD_DIRECTORY: string;
-  JWT_SECRET: string;
+  STATIC_DIRECTORY_PATH: string;
 }
 
 export const configRestSchema = convict<RestSchema>({
@@ -69,5 +71,17 @@ export const configRestSchema = convict<RestSchema>({
     format: String,
     env: 'JWT_SECRET',
     default: null
-  }
+  },
+  HOST: {
+    doc: 'API host',
+    format: String,
+    env: 'HOST',
+    default: 'localhost'
+  },
+  STATIC_DIRECTORY_PATH: {
+    doc: 'Path to static resources directory',
+    format: String,
+    env: 'STATIC_DIRECTORY_PATH',
+    default: 'static'
+  },
 });

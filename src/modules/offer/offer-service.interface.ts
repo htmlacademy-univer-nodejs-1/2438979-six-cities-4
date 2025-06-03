@@ -12,9 +12,9 @@ export interface OfferService extends DocumentExists {
   deleteById(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   findAll(limit: number, skip: number): Promise<DocumentType<OfferEntity>[]>;
   findTopPremiumByCity(city: City): Promise<DocumentType<OfferEntity>[]>;
-  findAllFavourite(userId: string, limit: number, skip: number): Promise<DocumentType<OfferEntity>[]>;
-  addToFavourite(offerId: string, userId: string): Promise<void>;
-  removeFromFavourite(offerId: string, userId: string): Promise<void>;
+  findAllFavorite(userId: string, limit: number, skip: number): Promise<DocumentType<OfferEntity>[]>;
+  addToFavorite(offerId: string, userId: string): Promise<void>;
+  removeFromFavorite(offerId: string, userId: string): Promise<void>;
   incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   exists(documentId: string): Promise<boolean>;
 }
