@@ -36,5 +36,8 @@
   ],
   "ts-node": {
     "esm": true
-  }
+  },
+  "files": [
+    "./custom.d.ts"
+  ]
 }

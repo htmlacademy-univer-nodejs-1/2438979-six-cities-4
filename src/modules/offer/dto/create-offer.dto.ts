@@ -1,6 +1,6 @@
 import { City, HousingType, Facility, Coordinates } from '../../../types/index.js';
 import { CreateOfferValidationMessage } from './create-offer.messages.js';
-import { IsBoolean, IsEnum, IsMongoId, IsNumber, IsString, MaxLength, MinLength, ValidateNested, ArrayMinSize, ArrayMaxSize, IsArray, IsDateString, IsInt, Max, Min, IsObject } from 'class-validator';
+import { IsBoolean, IsEnum, IsNumber, IsString, MaxLength, MinLength, ValidateNested, ArrayMinSize, ArrayMaxSize, IsArray, IsDateString, IsInt, Max, Min, IsObject } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateOfferDto {
@@ -60,7 +60,6 @@ export class CreateOfferDto {
   @IsEnum(Facility, { each: true, message: CreateOfferValidationMessage.facilities.invalidValue })
   public facilities!: Facility[];
 
-  @IsMongoId({ message: CreateOfferValidationMessage.authorId.invalidId })
   public authorId!: string;
 
   public numberOfComments!: number;

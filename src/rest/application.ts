@@ -6,6 +6,7 @@ import { DatabaseClient } from './database-client/index.js';
 import { getMongoURI } from '../lib/utils/database/index.js';
 import express, { Express } from 'express';
 import { Controller, ExceptionFilter } from '../rest/index.js';
+import { ParseTokenMiddleware } from '../rest/middlewares/parse-token.middleware.js';
 
 @injectable()
 export class Application {
@@ -18,6 +19,7 @@ export class Application {
     @inject(Component.OfferController) private readonly offerController: Controller,
     @inject(Component.ExceptionFilter) private readonly exceptionFilter: ExceptionFilter,
     @inject(Component.CommentController) private readonly commentController: Controller,
+    @inject(Component.AuthExceptionFilter) private readonly authExceptionFilter: ExceptionFilter,
   ) {
     this.server = express();
   }
@@ -57,11 +59,13 @@ export class Application {
   }
 
   private async _initMiddleware() {
+    const authenticateMiddleware = new ParseTokenMiddleware(this.config.get('JWT_SECRET'));
     this.server.use(express.json());
     this.server.use(
       '/upload',
       express.static(this.config.get('UPLOAD_DIRECTORY'))
     );
+    this.server.use(authenticateMiddleware.execute.bind(authenticateMiddleware));
   }
 
   private async _initControllers() {
@@ -72,5 +76,6 @@ export class Application {
 
   private async _initExceptionFilters() {
     this.server.use(this.exceptionFilter.catch.bind(this.exceptionFilter));
+    this.server.use(this.authExceptionFilter.catch.bind(this.authExceptionFilter));
   }
 }
