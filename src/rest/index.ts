@@ -8,3 +8,7 @@ export * from './exception-filter/app-exception-filter.js';
 export * from './types/request.params.js';
 export * from './types/request-body.js';
 export * from './errors/http-error.js';
+export * from './middlewares/document-exists.middleware.js';
+export * from './middlewares/middleware.interface.js';
+export * from './middlewares/validate-dto.middleware.js';
+export * from './middlewares/validate-objectId.middleware.js';

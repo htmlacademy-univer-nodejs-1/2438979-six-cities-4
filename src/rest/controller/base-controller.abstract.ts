@@ -23,7 +23,11 @@ export abstract class BaseController implements Controller {
 
   public addRoute(route: Route): void {
     const wrappedHandler = asyncHandler(route.handler.bind(route));
-    this._router[route.method](route.path, wrappedHandler);
+    const middlewareHandlers = route.middlewares?.map(
+      (item) => asyncHandler(item.execute.bind(item))
+    );
+    const allHandlers = middlewareHandlers ? [...middlewareHandlers, wrappedHandler] : wrappedHandler;
+    this._router[route.method](route.path, allHandlers);
     this.logger.info(`Registered route: ${route.method} ${route.path}`);
   }
 

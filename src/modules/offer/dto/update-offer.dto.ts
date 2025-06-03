@@ -1,22 +1,81 @@
 import { City, HousingType, Facility, Coordinates } from '../../../types/index.js';
-import { Types } from 'mongoose';
+import { IsOptional, IsBoolean, IsEnum, IsNumber, IsString, MaxLength, MinLength, ValidateNested, IsArray, IsDateString, IsInt, Max, Min, IsObject } from 'class-validator';
+import { CreateUpdateOfferValidationMessage } from './update-offer.messages.js';
+import { Type } from 'class-transformer';
 
 export class UpdateOfferDto {
-  public id!: Types.ObjectId;
-  public title!: string;
-  public description!: string;
-  public publicationDate!: Date;
-  public city!: City;
-  public preview!: string;
-  public photos!: string[];
-  public isPremium!: boolean;
-  public isFavorite!: boolean;
-  public rating!: number;
-  public type!: HousingType;
-  public numberOfRooms!: number;
-  public numberOfGuests!: number;
-  public retalCost!: number;
-  public facilities!: Facility[];
-  public numberOfComments!: number;
-  public coordinates!: Coordinates;
+  @IsOptional()
+  @IsString()
+  @MinLength(10, { message: CreateUpdateOfferValidationMessage.title.minLength })
+  @MaxLength(100, { message: CreateUpdateOfferValidationMessage.title.maxLength })
+  public title?: string;
+
+  @IsOptional()
+  @IsString()
+  @MinLength(20, { message: CreateUpdateOfferValidationMessage.description.minLength })
+  @MaxLength(1024, { message: CreateUpdateOfferValidationMessage.description.maxLength })
+  public description?: string;
+
+  @IsOptional()
+  @IsDateString({}, { message: CreateUpdateOfferValidationMessage.createdDate.invalidFormat })
+  public publicationDate?: Date;
+
+  @IsOptional()
+  @IsEnum(City, { message: CreateUpdateOfferValidationMessage.city.invalid })
+  public city?: City;
+
+  @IsOptional()
+  @IsString({ message: CreateUpdateOfferValidationMessage.preview.invalidFormat })
+  public preview?: string;
+
+  @IsOptional()
+  @IsArray({ message: CreateUpdateOfferValidationMessage.photos.invalidFormat })
+  public photos?: string[];
+
+  @IsOptional()
+  @IsBoolean({ message: CreateUpdateOfferValidationMessage.isPremium.invalidFormat })
+  public isPremium?: boolean;
+
+  @IsOptional()
+  @IsBoolean({ message: CreateUpdateOfferValidationMessage.isFavorite.invalidFormat })
+  public isFavorite?: boolean;
+
+  @IsOptional()
+  @IsNumber({ maxDecimalPlaces: 1 }, { message: CreateUpdateOfferValidationMessage.rating.invalidFormat })
+  public rating?: number;
+
+  @IsOptional()
+  @IsEnum(HousingType, { message: CreateUpdateOfferValidationMessage.type.invalid })
+  public type?: HousingType;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1, { message: CreateUpdateOfferValidationMessage.numberOfRooms.minValue })
+  @Max(8, { message: CreateUpdateOfferValidationMessage.numberOfRooms.maxValue })
+  public numberOfRooms?: number;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1, { message: CreateUpdateOfferValidationMessage.numberOfGuests.minValue })
+  @Max(10, { message: CreateUpdateOfferValidationMessage.numberOfGuests.maxValue })
+  public numberOfGuests?: number;
+
+  @IsOptional()
+  @IsInt({ message: CreateUpdateOfferValidationMessage.rentalCost.invalidFormat })
+  @Min(100, { message: CreateUpdateOfferValidationMessage.rentalCost.minValue })
+  @Max(100000, { message: CreateUpdateOfferValidationMessage.rentalCost.maxValue })
+  public rentalCost?: number;
+
+  @IsOptional()
+  @IsArray({ message: CreateUpdateOfferValidationMessage.facilities.invalidFormat })
+  public facilities?: Facility[];
+
+  @IsOptional()
+  public numberOfComments?: number;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => Object)
+  @IsObject({ message: CreateUpdateOfferValidationMessage.coordinates.invalidFormat })
+  public coordinates?: Coordinates;
 }
