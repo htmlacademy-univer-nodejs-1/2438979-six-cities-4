@@ -7,7 +7,6 @@ import { DocumentType, types } from '@typegoose/typegoose';
 import { OfferEntity } from './offer.entity.js';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
-import { Types } from 'mongoose';
 
 @injectable()
 export class DefaultOfferService implements OfferService {
@@ -22,7 +21,7 @@ export class DefaultOfferService implements OfferService {
     return this.populateAuthor(result);
   }
 
-  public async findById(offerId: string | Types.ObjectId): Promise<DocumentType<OfferEntity> | null> {
+  public async findById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
     const offer = await this.offerModel.findById(offerId).exec();
     return offer && this.populateAuthor(offer);
   }
@@ -64,9 +63,9 @@ export class DefaultOfferService implements OfferService {
     return Promise.all(offers.map(this.populateAuthor));
   }
 
-  public async findAllFavourite(userId: string | Types.ObjectId, limit: number, skip: number): Promise<DocumentType<OfferEntity>[]> {
+  public async findAllFavorite(userId: string, limit: number, skip: number): Promise<DocumentType<OfferEntity>[]> {
     const offers = await this.offerModel
-      .find({ favouriteUsers: { $in: [userId] } })
+      .find({ favoriteUserIds: { $in: [userId] } })
       .skip(skip)
       .limit(limit)
       .exec();
@@ -74,12 +73,12 @@ export class DefaultOfferService implements OfferService {
     return Promise.all(offers.map(this.populateAuthor));
   }
 
-  public async addToFavourite(offerId: string | Types.ObjectId, userId: string | Types.ObjectId): Promise<void> {
-    await this.offerModel.findByIdAndUpdate(offerId, { $addToSet: { favouriteUsers: userId } }).exec();
+  public async addToFavorite(offerId: string, userId: string): Promise<void> {
+    await this.offerModel.findByIdAndUpdate(offerId, { $addToSet: { favoriteUserIds: userId } }).exec();
   }
 
-  public async removeFromFavourite(offerId: string | Types.ObjectId, userId: string | Types.ObjectId): Promise<void> {
-    await this.offerModel.findByIdAndUpdate(offerId, { $pull: { favouriteUsers: userId } }).exec();
+  public async removeFromFavorite(offerId: string , userId: string): Promise<void> {
+    await this.offerModel.findByIdAndUpdate(offerId, { $pull: { favoriteUserIds: userId } }).exec();
   }
 
   public async incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null> {

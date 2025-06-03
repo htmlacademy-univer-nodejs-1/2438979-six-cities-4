@@ -20,7 +20,7 @@ export class OfferRdo {
   public city!: string;
 
   @Expose()
-  public previewImage!: string;
+  public preview!: string;
 
   @Expose()
   public photos!: string[];
@@ -31,8 +31,8 @@ export class OfferRdo {
   @Expose()
   @Transform(({ obj }) => {
     const currentUserId = obj.currentUserId as string | undefined;
-    return Array.isArray(obj.favouriteUserIds) && currentUserId
-      ? obj.favouriteUserIds.includes(currentUserId)
+    return Array.isArray(obj.favoriteUserIds) && currentUserId
+      ? obj.favoriteUserIds.includes(currentUserId)
       : false;
   })
   public isFavorite!: boolean;
@@ -44,24 +44,24 @@ export class OfferRdo {
   public type!: string;
 
   @Expose()
-  public roomCount!: number;
+  public numberOfRooms!: number;
 
   @Expose()
-  public guestCount!: number;
+  public numberOfGuests!: number;
 
   @Expose()
-  public price!: number;
+  public rentalCost!: number;
 
   @Expose()
-  public amenities!: string[];
+  public facilities!: string[];
 
   @Expose()
-  public commentCount!: number;
+  public numberOfComments!: number;
 
   @Expose()
   public coordinates!: Coordinates;
 
   @Expose()
   @Type(() => UserRdo)
-  public userId!: UserRdo;
+  public authorId!: UserRdo;
 }

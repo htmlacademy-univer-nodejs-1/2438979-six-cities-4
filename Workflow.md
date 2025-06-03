@@ -75,6 +75,42 @@ npm run json-server
 Запускает JSON-сервер на основе файла `mocks/mock-server-data.json`.  
 Сервер доступен по адресу http://localhost:3000. Нужен для генерации в cli приложении. 
 
+#### Запустить консольную утилиту
+
+```bash
+npm run cli
+```
+
+#### Запустить команду version консольной утилиты
+
+```bash
+npm run cli:version
+```
+
+#### Запустить команду help консольной утилиты
+
+```bash
+npm run cli:help
+```
+
+#### Запустить команду import консольной утилиты
+
+```bash
+npm run cli:import
+```
+
+#### Запустить команду generate консольной утилиты, будет сгенерировано 300 предложений
+
+```bash
+npm run cli:generate
+```
+
+#### Запустить nodemon hot restart для разрабоки 
+
+```bash
+npm run dev
+```
+
 ## Структура проекта
 
 ### Директория `src`

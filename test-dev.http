@@ -1,147 +1,154 @@
-### Создать нового пользователя
-POST http://localhost:3000/users/register HTTP/1.1
+### --- Пользователи ---
+
+### Регистрация пользователя
+POST http://localhost:5000/users/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "tessaro",
-  "email": "testuser1@example.com",
-  "avatarPath": "avatar1.jpg",
-  "password": "password123",
-  "type": "pro"
+  "name": "nikita",
+  "email": "nikita.dev@example.com",
+  "avatarPath": "",
+  "password": "supersecret",
+  "type": "ordinary"
 }
-
-###
 
 ### Войти в систему (логин пользователя)
-POST http://localhost:3000/users/login HTTP/1.1
+POST http://localhost:5000/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "testuser1@example.com",
-  "password": "password123"
+  "email": "nikita.dev@example.com",
+  "password": "supersecret"
 }
 
-###
+### Проверить токен пользователя
+GET http://localhost:5000/users/login HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5pa2l0YS5kZXZAZXhhbXBsZS5jb20iLCJuYW1lIjoibmlraXRhIiwidHlwZSI6Im9yZGluYXJ5IiwiaWQiOiI2ODNlZmY3N2Y4YjU2NmE4Y2Q0ZTljODgiLCJpYXQiOjE3NDg5NTkxNDEsImV4cCI6MTc0OTIxODM0MX0.Of_UlXvU_aX185f1TTx94OIno5XwyZQwKXZ-B1Zlc68
 
 ### Отправить изображение
-POST http://localhost:3000/users/64fa8bc938075f5441cff999/avatar HTTP/1.1
+POST http://localhost:5000/users/683eff77f8b566a8cd4e9c88/avatar HTTP/1.1
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="avatar"; filename="profile.jpg"
+Content-Disposition: form-data; name="avatar"; filename="nikita.jpg"
 Content-Type: image/jpeg
 
-< /Users/username/Pictures/profile.jpg
+< C:\Users\nikko\Downloads\test-kotik.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
-###
 
-### Создать новый оффер
-POST http://localhost:3000/offers HTTP/1.1
+### --- Предложения ---
+
+### Создать новое предложение
+POST http://localhost:5000/offers HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5pa2l0YS5kZXZAZXhhbXBsZS5jb20iLCJuYW1lIjoibmlraXRhIiwidHlwZSI6Im9yZGluYXJ5IiwiaWQiOiI2ODNlZmY3N2Y4YjU2NmE4Y2Q0ZTljODgiLCJpYXQiOjE3NDg5NTkxNDEsImV4cCI6MTc0OTIxODM0MX0.Of_UlXvU_aX185f1TTx94OIno5XwyZQwKXZ-B1Zlc68
 
 {
-  "title": "Sunset Loft",
-  "description": "A cozy loft with sunset view and modern interior.",
-  "publicationDate": "2025-05-15T00:00:00.000Z",
-  "city": "Cologne",
-  "previewImage": "loft.jpg",
+  "title": "Cozy Loft in Amsterdam",
+  "description": "A spacious and bright loft near the canal.",
+  "publicationDate": "2025-05-10T00:00:00.000Z",
+  "city": "Amsterdam",
+  "preview": "loft.jpg",
   "photos": ["photo1.jpg", "photo2.jpg", "photo3.jpg", "photo4.jpg", "photo5.jpg", "photo6.jpg"],
   "isPremium": true,
   "isFavorite": false,
+  "rating": 4.9,
+  "type": "apartment",
+  "numberOfRooms": 2,
+  "numberOfGuests": 3,
+  "rentalCost": 220,
+  "facilities": ["Breakfast", "Washer"],
+  "authorId": "683eff77f8b566a8cd4e9c88",
+  "commentCount": 0,
+  "coordinates": {
+    "latitude": 52.370216,
+    "longitude": 4.895168
+  }
+}
+
+### Получить список всех предложений
+GET http://localhost:5000/offers HTTP/1.1
+
+### Получить первые 3 предложения
+GET http://localhost:5000/offers?limit=3 HTTP/1.1
+
+### Пропустить 20 предложений, взять 7 предложений
+GET http://localhost:5000/offers?limit=7&skip=20 HTTP/1.1
+
+### Получить предложение по ID
+GET http://localhost:5000/offers/683c45f248e8b178c43ea7d2 HTTP/1.1
+
+### Загрузить изображение для предложения
+POST http://localhost:5000/offers/683c45f248e8b178c43ea7d2/image HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5pa2l0YS5kZXZAZXhhbXBsZS5jb20iLCJuYW1lIjoibmlraXRhIiwidHlwZSI6Im9yZGluYXJ5IiwiaWQiOiI2ODNlZmY3N2Y4YjU2NmE4Y2Q0ZTljODgiLCJpYXQiOjE3NDg5NTkxNDEsImV4cCI6MTc0OTIxODM0MX0.Of_UlXvU_aX185f1TTx94OIno5XwyZQwKXZ-B1Zlc68
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="interior.jpg"
+Content-Type: image/jpeg
+
+< C:\Users\nikko\Downloads\test-kotik.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Обновить предложение по ID
+PATCH http://localhost:5000/offers/683f096b582887dd99922bca HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5pa2l0YS5kZXZAZXhhbXBsZS5jb20iLCJuYW1lIjoibmlraXRhIiwidHlwZSI6Im9yZGluYXJ5IiwiaWQiOiI2ODNlZmY3N2Y4YjU2NmE4Y2Q0ZTljODgiLCJpYXQiOjE3NDg5NTkxNDEsImV4cCI6MTc0OTIxODM0MX0.Of_UlXvU_aX185f1TTx94OIno5XwyZQwKXZ-B1Zlc68
+
+{
+  "title": "Updated Loft Title",
+  "description": "Updated description for the loft.",
+  "publicationDate": "2025-05-15T00:00:00.000Z",
+  "city": "Amsterdam",
+  "previewImage": "updated-loft.jpg",
+  "photos": ["photo1.jpg", "photo2.jpg", "photo3.jpg", "photo4.jpg", "photo5.jpg", "photo6.jpg"],
+  "isPremium": true,
+  "isFavorite": true,
   "rating": 4.7,
   "type": "house",
   "roomCount": 3,
-  "guestCount": 6,
-  "price": 180,
-  "amenities": ["Wi-Fi", "Coffee machine", "Towels"],
-  "userId": "64fa8bd9a58eca7039579999",
-  "commentCount": 0,
+  "numberOfGuests": 4,
+  "rentalCost": 250,
+  "facilities": ["Wi-Fi", "Coffee machine", "Balcony"],
+  "commentCount": 1,
   "coordinates": {
-    "latitude": 50.9375,
-    "longitude": 6.9603
+    "latitude": 52.3676,
+    "longitude": 4.9041
   }
 }
 
-###
-
-### Получить список всех офферов
-GET http://localhost:6000/offers HTTP/1.1
-
-###
-
-### Получить оффер по ID
-GET http://localhost:6000/offers/64fa88e878651243adf27111 HTTP/1.1
-
-###
-
-### Обновить оффер по ID
-PATCH http://localhost:6000/offers/64fa88e878651243adf27111 HTTP/1.1
-Content-Type: application/json
-
-{
-  "title": "Updated Sunset Loft",
-  "description": "Now with free breakfast and sea view.",
-  "publicationDate": "2025-05-20T00:00:00.000Z",
-  "city": "Cologne",
-  "previewImage": "updated-loft.jpg",
-  "photos": ["u1.jpg", "u2.jpg", "u3.jpg", "u4.jpg", "u5.jpg", "u6.jpg"],
-  "isPremium": true,
-  "isFavorite": true,
-  "rating": 4.9,
-  "type": "house",
-  "roomCount": 4,
-  "guestCount": 7,
-  "price": 250,
-  "amenities": ["Wi-Fi", "TV", "Sauna"],
-  "commentCount": 2,
-  "coordinates": {
-    "latitude": 50.9375,
-    "longitude": 6.9603
-  }
-}
-
-###
-
-### Удалить оффер по ID
-DELETE http://localhost:6000/offers/64fa88e878651243adf27111 HTTP/1.1
-
-###
+### Удалить предложение по ID
+DELETE http://localhost:5000/offers/683f0d2cac9471a17f6cf50f HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5pa2l0YS5kZXZAZXhhbXBsZS5jb20iLCJuYW1lIjoibmlraXRhIiwidHlwZSI6Im9yZGluYXJ5IiwiaWQiOiI2ODNlZmY3N2Y4YjU2NmE4Y2Q0ZTljODgiLCJpYXQiOjE3NDg5NTkxNDEsImV4cCI6MTc0OTIxODM0MX0.Of_UlXvU_aX185f1TTx94OIno5XwyZQwKXZ-B1Zlc68
 
 ### Получение премиальных предложений для города
-GET http://localhost:6000/offers/premium/Cologne HTTP/1.1
-
-###
+GET http://localhost:5000/offers/premium/Amsterdam HTTP/1.1
 
 ### Получить избранные предложения пользователя
-GET http://localhost:6000/offers/favourite HTTP/1.1
-
-###
+GET http://localhost:5000/offers/favorite HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5pa2l0YS5kZXZAZXhhbXBsZS5jb20iLCJuYW1lIjoibmlraXRhIiwidHlwZSI6Im9yZGluYXJ5IiwiaWQiOiI2ODNlZmY3N2Y4YjU2NmE4Y2Q0ZTljODgiLCJpYXQiOjE3NDg5NTkxNDEsImV4cCI6MTc0OTIxODM0MX0.Of_UlXvU_aX185f1TTx94OIno5XwyZQwKXZ-B1Zlc68
 
 ### Добавить предложение в избранное
-POST http://localhost:6000/offers/favourite/64fa7f36f51f3b4e0b9bb999 HTTP/1.1
-
-###
+POST http://localhost:5000/offers/favorite/683f0d75ac9471a17f6cf51b HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5pa2l0YS5kZXZAZXhhbXBsZS5jb20iLCJuYW1lIjoibmlraXRhIiwidHlwZSI6Im9yZGluYXJ5IiwiaWQiOiI2ODNlZmY3N2Y4YjU2NmE4Y2Q0ZTljODgiLCJpYXQiOjE3NDg5NTkxNDEsImV4cCI6MTc0OTIxODM0MX0.Of_UlXvU_aX185f1TTx94OIno5XwyZQwKXZ-B1Zlc68
 
 ### Удалить предложение из избранного
-DELETE http://localhost:6000/offers/favourite/64fa7f36f51f3b4e0b9bb999 HTTP/1.1
+DELETE http://localhost:5000/offers/favorite/683f0d75ac9471a17f6cf51b HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5pa2l0YS5kZXZAZXhhbXBsZS5jb20iLCJuYW1lIjoibmlraXRhIiwidHlwZSI6Im9yZGluYXJ5IiwiaWQiOiI2ODNlZmY3N2Y4YjU2NmE4Y2Q0ZTljODgiLCJpYXQiOjE3NDg5NTkxNDEsImV4cCI6MTc0OTIxODM0MX0.Of_UlXvU_aX185f1TTx94OIno5XwyZQwKXZ-B1Zlc68
 
-###
+### --- Комментарии ---
 
 ### Создать комментарий
-POST http://localhost:6000/comments HTTP/1.1
+POST http://localhost:5000/comments HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5pa2l0YS5kZXZAZXhhbXBsZS5jb20iLCJuYW1lIjoibmlraXRhIiwidHlwZSI6Im9yZGluYXJ5IiwiaWQiOiI2ODNlZmY3N2Y4YjU2NmE4Y2Q0ZTljODgiLCJpYXQiOjE3NDg5NTkxNDEsImV4cCI6MTc0OTIxODM0MX0.Of_UlXvU_aX185f1TTx94OIno5XwyZQwKXZ-B1Zlc68
 
 {
-  "text": "Amazing place, had a great weekend!",
-  "rating": 5,
-  "offerId": "64fa89c478651243adf27222",
-  "userId": "64fa8bd373067f6c367d9999"
+  "text": "Such a cozy place",
+  "rating": 4,
+  "offerId": "683f0ead5f534518c2e2ec00"
 }
 
-###
-
 ### Список комментариев к объявлению
-GET http://localhost:6000/offers/64fa89c478651243adf27222/comments HTTP/1.1
-
-###
+GET http://localhost:5000/offers/683f0ead5f534518c2e2ec00/comments HTTP/1.1

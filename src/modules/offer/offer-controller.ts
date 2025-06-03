@@ -36,26 +36,26 @@ export class OfferController extends BaseController {
     });
 
     this.addRoute({
-      path: '/favourite',
+      path: '/favorite',
       method: HttpMethod.Get,
-      handler: this.indexFavouriteOffers.bind(this),
+      handler: this.indexFavoriteOffers.bind(this),
       middlewares: [
         new PrivateRouteMiddleware()
       ]
     });
     this.addRoute({
-      path: '/favourite/:offerId',
+      path: '/favorite/:offerId',
       method: HttpMethod.Post,
-      handler: this.createFavourite.bind(this),
+      handler: this.createFavorite.bind(this),
       middlewares: [
         new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('offerId'),
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')]
     });
     this.addRoute({
-      path: '/favourite/:offerId',
+      path: '/favorite/:offerId',
       method: HttpMethod.Delete,
-      handler: this.deleteFavourite.bind(this),
+      handler: this.deleteFavorite.bind(this),
       middlewares: [
         new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('offerId'),
@@ -211,10 +211,10 @@ export class OfferController extends BaseController {
     this.ok(res, fillDTO(OfferRdo, offers));
   }
 
-  private async indexFavouriteOffers(req: Request, res: Response): Promise<void> {
+  private async indexFavoriteOffers(req: Request, res: Response): Promise<void> {
     const limit = DEFAULT_OFFER_COUNT;
     const skip = DEFAULT_SKIP_COUNT;
-    const offers = await this.offerService.findAllFavourite(req.tokenPayload.id, limit, skip);
+    const offers = await this.offerService.findAllFavorite(req.tokenPayload.id, limit, skip);
     offers.forEach((offer: DocumentType<OfferEntity> & { currentUserId?: string }) => {
       offer.currentUserId = req.tokenPayload.id;
     });
@@ -222,15 +222,15 @@ export class OfferController extends BaseController {
   }
 
 
-  private async createFavourite({ params, tokenPayload }: Request<ParamOfferId>, res: Response): Promise<void> {
+  private async createFavorite({ params, tokenPayload }: Request<ParamOfferId>, res: Response): Promise<void> {
     const { offerId } = params;
-    await this.offerService.addToFavourite(offerId, tokenPayload.id);
+    await this.offerService.addToFavorite(offerId, tokenPayload.id);
     this.noContent(res, {});
   }
 
-  private async deleteFavourite({ params, tokenPayload }: Request<ParamOfferId>, res: Response): Promise<void> {
+  private async deleteFavorite({ params, tokenPayload }: Request<ParamOfferId>, res: Response): Promise<void> {
     const { offerId } = params;
-    await this.offerService.removeFromFavourite(offerId, tokenPayload.id);
+    await this.offerService.removeFromFavorite(offerId, tokenPayload.id);
     this.noContent(res, {});
   }
 
