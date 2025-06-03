@@ -13,3 +13,5 @@ export * from './middlewares/middleware.interface.js';
 export * from './middlewares/validate-dto.middleware.js';
 export * from './middlewares/validate-objectId.middleware.js';
 export * from './middlewares/upload-file.middleware.js';
+export * from './middlewares/parse-token.middleware.js';
+export * from './middlewares/private-route.middleware.js';
