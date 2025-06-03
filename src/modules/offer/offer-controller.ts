@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { isValidObjectId } from 'mongoose';
 import { StatusCodes } from 'http-status-codes';
 import { Logger } from '../../rest/logger/index.js';
-import { BaseController, DocumentExistsMiddleware, HttpError, HttpMethod, ValidateObjectIdMiddleware, ValidateDtoMiddleware, PrivateRouteMiddleware } from '../../rest/index.js';
+import { BaseController, DocumentExistsMiddleware, HttpError, HttpMethod, ValidateObjectIdMiddleware, ValidateDtoMiddleware, PrivateRouteMiddleware, UploadFileMiddleware } from '../../rest/index.js';
 import { Component, City } from '../../types/index.js';
 import { OfferService } from './offer-service.interface.js';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
@@ -17,13 +17,16 @@ import { CommentRdo } from '../comment/rdo/comment.rdo.js';
 import { DEFAULT_OFFER_COUNT, DEFAULT_COMMENT_COUNT, DEFAULT_SKIP_COUNT } from '../../lib/constants/offer-constants.js';
 import { DocumentType } from '@typegoose/typegoose';
 import { OfferEntity } from './offer.entity.js';
+import { Config, RestSchema } from '../../rest/config/index.js';
+import { UploadImageRdo } from './rdo/upload-image.rdo.js';
 
 @injectable()
 export class OfferController extends BaseController {
   constructor(
     @inject(Component.Logger) protected logger: Logger,
     @inject(Component.OfferService) private offerService: OfferService,
-    @inject(Component.CommentService) private readonly commentService: CommentService
+    @inject(Component.CommentService) private readonly commentService: CommentService,
+    @inject(Component.Config) private readonly configService: Config<RestSchema>,
   ) {
     super(logger);
     this.addRoute({
@@ -111,6 +114,16 @@ export class OfferController extends BaseController {
       middlewares: [
         new ValidateObjectIdMiddleware('offerId'),
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
+      ]
+    });
+    this.addRoute({
+      path: '/:offerId/image',
+      method: HttpMethod.Post,
+      handler: this.uploadImage.bind(this),
+      middlewares: [
+        new PrivateRouteMiddleware(),
+        new ValidateObjectIdMiddleware('offerId'),
+        new UploadFileMiddleware(this.configService.get('UPLOAD_DIRECTORY'), 'image'),
       ]
     });
   }
@@ -225,6 +238,13 @@ export class OfferController extends BaseController {
 
     const comments = await this.commentService.findAllForOffer(params.offerId, DEFAULT_COMMENT_COUNT, DEFAULT_SKIP_COUNT);
     this.ok(res, fillDTO(CommentRdo, comments));
+  }
+
+  public async uploadImage({ params, file } : Request<ParamOfferId>, res: Response) {
+    const { offerId } = params;
+    const updateDto = { preview: file?.filename };
+    await this.offerService.updateById(offerId, updateDto);
+    this.created(res, fillDTO(UploadImageRdo, updateDto));
   }
 
   private sendBadRequest<T>(paramName: string, value: T): void {
