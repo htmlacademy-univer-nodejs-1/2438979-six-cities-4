@@ -3,8 +3,6 @@ import readline from 'node:readline';
 import fs from 'node:fs';
 import path from 'node:path';
 import { Command } from './command.js';
-import { City, HousingType, Facility } from '../../types/offer.js';
-import { UserType } from '../../types/user.js';
 import { createReadStream } from 'node:fs';
 import { createCliContainer } from '../cli.container.js';
 import { UserService } from '../../modules/user/user-service.interface.js';
@@ -12,9 +10,10 @@ import { OfferService } from '../../modules/offer/offer-service.interface.js';
 import { Config, RestSchema } from '../../rest/config/index.js';
 import { DatabaseClient } from '../../rest/database-client/database-client.interface.js';
 import { Component } from '../../types/index.js';
-import { getMongoURI } from '../../utils/database/mongo-utils.js';
+import { getMongoURI } from '../../lib/utils/database/get-mongo-uri.js';
 import { CreateUserDto } from '../../modules/user/index.js';
 import { CreateOfferDto } from '../../modules/offer/index.js';
+import { getOfferFromTsv } from '../../lib/utils/tsv/index.js';
 
 export class ImportCommand implements Command {
   public getName(): string {
@@ -58,50 +57,41 @@ export class ImportCommand implements Command {
       if (!line.trim()) {
         continue;
       }
-      const [
-        title, description, publicationDate, city, preview,
-        photos, isPremium, isFavorite, rating, type,
-        numberOfRooms, numberOfGuests, rentalCost, facilities,
-        authorName, authorEmail, authorAvatar, authorPassword, authorType,
-        latitude, longitude
-      ] = line.split('\t');
+      const offer = getOfferFromTsv(line);
 
       const authorDto: CreateUserDto = {
-        name: authorName,
-        email: authorEmail,
-        avatar: authorAvatar,
-        password: authorPassword,
-        type: authorType as UserType
+        name: offer.author.name,
+        email: offer.author.email,
+        avatar: offer.author.avatar,
+        password: offer.author.password,
+        type: offer.author.type
       };
 
       const author = await userService.findOrCreate(authorDto, config.get('SALT'));
 
       const offerDto: CreateOfferDto = {
-        title: title,
-        description: description,
-        publicationDate: new Date(publicationDate),
-        city: city as City,
-        preview: preview,
-        photos: photos.split(','),
-        isPremium: isPremium === 'true',
-        isFavorite: isFavorite === 'true',
-        rating: parseFloat(rating),
-        type: type as HousingType,
-        numberOfRooms: Number(numberOfRooms),
-        numberOfGuests: Number(numberOfGuests),
-        rentalCost: Number(rentalCost),
-        facilities: facilities.split(',') as Facility[],
+        title: offer.title,
+        description: offer.description,
+        publicationDate: offer.publicationDate,
+        city: offer.city,
+        preview: offer.preview,
+        photos: offer.photos,
+        isPremium: offer.isPremium,
+        isFavorite: offer.isFavorite,
+        rating: offer.rating,
+        type: offer.type,
+        numberOfRooms: offer.numberOfRooms,
+        numberOfGuests: offer.numberOfGuests,
+        rentalCost: offer.rentalCost,
+        facilities: offer.facilities,
         authorId: author.id,
         numberOfComments: 0,
-        coordinates: {
-          latitude: parseFloat(latitude),
-          longitude: parseFloat(longitude)
-        }
+        coordinates: offer.coordinates
       };
 
       await offerService.create(offerDto);
 
-      console.log(chalk.magenta(`Импортировано предложение ${authorName} из города: ${offerDto.city}`));
+      console.log(chalk.magenta(`Импортировано предложение ${offer.author.name} из города: ${offer.city}`));
     }
 
     await databaseClient.disconnect();
